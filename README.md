@@ -28,3 +28,5 @@ Docker
 1. docker build -t streamlitapp .
 2. docker run -p 8501:8501 streamlitapp
 
+![image](https://github.com/shelearnai/RAG_Langchain_OpensourceLLM/assets/6790548/43cbcb81-cd5b-4771-b333-b0d3dcc8cd3a)
+
