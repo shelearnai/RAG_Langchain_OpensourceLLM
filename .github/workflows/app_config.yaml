@@ -1,4 +1,3 @@
-
 name: CI/CD Pipeline
 
 on:
@@ -28,11 +27,50 @@ jobs:
         with:
           push: true
           tags: ${{ secrets.DOCKER_USERNAME }}/rag_streamlit:latest
-  
+
+  test:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.8'
+
+      - name: Install dependencies
+        run: |
+          python -m venv venv
+          source venv/bin/activate
+          pip install -r requirements.txt
+
+      - name: Run tests
+        run: |
+          source venv/bin/activate
+          pytest
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Log in to Docker Hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Pull Docker image
+        run: docker pull ${{ secrets.DOCKER_USERNAME }}/rag_streamlit:latest
+
       - name: Deploy to server
         run: |
-            docker pull ${{ secrets.DOCKER_USERNAME }}/rag_streamlit:latest
-            docker stop streamlit_app || true
-            docker rm streamlit_app || true
-            docker run -d --name streamlit_app -p 8501:8501 ${{ secrets.DOCKER_USERNAME }}/your_image_name:latest
-          
+          docker stop streamlit_app || true
+          docker rm streamlit_app || true
+          docker run -d --name streamlit_app -p 8501:8501 ${{ secrets.DOCKER_USERNAME }}/rag_streamlit:latest
