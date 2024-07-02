@@ -1,0 +1,11 @@
+streamlit
+langchain
+torch
+langchain-community
+transformers
+fitz
+PyMuPDF
+bitsandbytes
+accelerate
+sentence_transformers
+faiss-cpu
