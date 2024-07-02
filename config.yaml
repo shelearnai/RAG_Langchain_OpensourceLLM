@@ -1,6 +1,6 @@
 model_config:
-  model: 'microsoft/Phi-3-mini-4k-instruct'
-  embedding_model: 'BAAI/bge-small-en'
+  model: ''
+  embedding_model: ''
 
 text_split_config:
   chunk_size: 2000
