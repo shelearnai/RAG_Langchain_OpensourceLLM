@@ -27,7 +27,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/your_image_name:latest
+          tags: ${{ secrets.DOCKER_USERNAME }}/rag_streamlit:latest
 
       - name: Deploy to server
         env:
@@ -36,7 +36,7 @@ jobs:
           SSH_KEY: ${{ secrets.SSH_KEY }}
         run: |
           ssh -i $SSH_KEY $USER@$HOST << 'EOF'
-            docker pull ${{ secrets.DOCKER_USERNAME }}/your_image_name:latest
+            docker pull ${{ secrets.DOCKER_USERNAME }}/rag_streamlit:latest
             docker stop streamlit_app || true
             docker rm streamlit_app || true
             docker run -d --name streamlit_app -p 8501:8501 ${{ secrets.DOCKER_USERNAME }}/your_image_name:latest
