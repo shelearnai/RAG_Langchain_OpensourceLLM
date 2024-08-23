@@ -17,8 +17,8 @@ Extract structured information from PDF documents.
 Ask questions based on the content and receive answers.
 
 Installation
-1. git clone https://github.com/your-username/rag-langchain-app.git
-cd rag-langchain-app
+1. git clone https://github.com/shelearnai/RAG_Langchain_OpensourceLLM.git
+cd RAG_Langchain_OpensourceLLM
 
 2. pip install -r requirements.txt
 
